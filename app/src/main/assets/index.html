@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Together Tonight</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#2A0E2E;color:#F7EDD8;min-height:100vh;padding-bottom:84px}
+header{position:sticky;top:0;z-index:10;background:#2A0E2E;border-bottom:1px solid #5A2A4A;padding:14px 18px 10px}
+header h1{margin:0;font-size:22px;color:#F7EDD8}
+header h1 span{color:#D4AF69}
+header p{margin:4px 0 0;font-size:13px;color:#D9B8C9}
+main{padding:16px 16px 8px;max-width:640px;margin:0 auto}
+h2{font-size:19px;color:#F7EDD8;margin:18px 0 10px}
+h3{font-size:16px;margin:0 0 6px}
+.sub{color:#D9B8C9;font-size:14px;line-height:1.5}
+.hero{background:linear-gradient(135deg,#431A3E,#5E2140);border:1px solid #D4AF69;border-radius:20px;padding:22px 18px;text-align:center;margin-top:6px}
+.hero .big{font-size:26px;line-height:1.25;margin:0 0 6px}
+.hero p{margin:0 0 16px;color:#EFD9E2;font-size:15px}
+.btn{display:block;width:100%;padding:16px;border-radius:14px;border:0;font-size:17px;font-weight:700;cursor:pointer;margin:8px 0}
+.btn-gold{background:#D4AF69;color:#2A0E2E}
+.btn-ghost{background:transparent;color:#F7EDD8;border:1.5px solid #D4AF69}
+.btn-soft{background:#431A3E;color:#F7EDD8;border:1px solid #6B3A5E}
+.btn-row{display:flex;gap:10px}
+.btn-row .btn{flex:1}
+.card{background:#3D1538;border:1px solid #6B3A5E;border-radius:16px;padding:16px;margin:10px 0;cursor:pointer}
+.card:active{background:#4A1B44}
+.card h3{color:#F7EDD8}
+.card p{margin:0;color:#D9B8C9;font-size:14px;line-height:1.5}
+.tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;background:#2A0E2E;border:1px solid #8A5A7A;color:#EFD9E2;border-radius:999px;padding:4px 10px}
+.tag.gold{border-color:#D4AF69;color:#D4AF69}
+.catgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.catcard{background:#3D1538;border:1px solid #6B3A5E;border-radius:16px;padding:16px 12px;text-align:center;cursor:pointer}
+.catcard .em{font-size:28px}
+.catcard b{display:block;margin-top:6px;font-size:15px}
+.catcard span{font-size:12px;color:#D9B8C9}
+input[type=search]{width:100%;padding:14px 16px;border-radius:14px;border:1px solid #6B3A5E;background:#1E0A22;color:#F7EDD8;font-size:16px;margin-top:12px;outline:none}
+input[type=search]::placeholder{color:#A9839A}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{padding:10px 16px;border-radius:999px;border:1.5px solid #6B3A5E;background:transparent;color:#F7EDD8;font-size:15px;cursor:pointer}
+.chip.on{background:#D4AF69;color:#2A0E2E;border-color:#D4AF69;font-weight:700}
+.qcard{background:linear-gradient(135deg,#431A3E,#5E2140);border:1px solid #D4AF69;border-radius:20px;padding:28px 20px;min-height:180px;display:flex;flex-direction:column;justify-content:center;text-align:center;margin:14px 0}
+.qcard .qtag{font-size:12px;letter-spacing:2px;color:#D4AF69;text-transform:uppercase}
+.qcard .qtext{font-size:22px;line-height:1.4;margin:12px 0 0}
+.note{background:#1E0A22;border:1px solid #6B3A5E;border-radius:14px;padding:14px;font-size:14px;line-height:1.55;color:#EFD9E2;margin:12px 0}
+.note b{color:#D4AF69}
+.detail-meta{color:#D9B8C9;font-size:14px;line-height:1.6}
+.detail-meta b{color:#D4AF69}
+.empty{text-align:center;color:#D9B8C9;padding:36px 10px;line-height:1.6}
+nav{position:fixed;left:0;right:0;bottom:0;background:#1E0A22;border-top:1px solid #5A2A4A;display:flex;z-index:20}
+nav button{flex:1;background:none;border:0;color:#C9A0B8;padding:12px 2px 14px;font-size:12px;cursor:pointer}
+nav button.on{color:#D4AF69;font-weight:700}
+nav button .ic{font-size:20px;display:block}
+.back{color:#D4AF69;background:none;border:0;font-size:16px;padding:6px 0;cursor:pointer}
+.small{font-size:13px;color:#C9A0B8}
+.gate{text-align:center;padding:30px 10px}
+.gate .lock{font-size:56px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>Together <span>Tonight</span> &#10084;</h1>
+  <p>Just the two of you. Everything stays on this phone.</p>
+</header>
+<main>
+  <!-- HOME -->
+  <section id="view-home">
+    <div class="hero">
+      <p class="big">Tonight, us &#10084;</p>
+      <p>Mahesh &amp; Ekashmi &mdash; what shall we do together this evening?</p>
+      <button class="btn btn-gold" onclick="surpriseMe()">&#10024; Surprise Me &mdash; Pick For Tonight</button>
+      <button class="btn btn-ghost" onclick="showQuestions()">Ask Each Other Something</button>
+    </div>
+    <input type="search" id="search" placeholder="Search ideas&hellip; try &lsquo;movie&rsquo;, &lsquo;walk&rsquo;, &lsquo;cook&rsquo;" oninput="onSearch(this.value)">
+    <h2>Browse by mood</h2>
+    <div class="catgrid" id="catgrid"></div>
+    <h2>Why not tonight?</h2>
+    <div id="home-picks"></div>
+  </section>
+
+  <!-- BROWSE -->
+  <section id="view-browse" class="hidden">
+    <button class="back" onclick="goHome()">&larr; Home</button>
+    <h2 id="browse-title">All ideas</h2>
+    <div class="chips" id="cat-chips"></div>
+    <div id="browse-list"></div>
+  </section>
+
+  <!-- DETAIL -->
+  <section id="view-detail" class="hidden">
+    <button class="back" onclick="backFromDetail()">&larr; Back</button>
+    <div id="detail"></div>
+  </section>
+
+  <!-- QUESTIONS -->
+  <section id="view-questions" class="hidden">
+    <h2>Couples Questions</h2>
+    <p class="sub">Take turns. Answer honestly, no judging, no phones. Tap for a new card.</p>
+    <div class="chips">
+      <button class="chip on" data-q="All" onclick="setQFilter('All',this)">All</button>
+      <button class="chip" data-q="Fun" onclick="setQFilter('Fun',this)">Fun</button>
+      <button class="chip" data-q="Deep" onclick="setQFilter('Deep',this)">Deep</button>
+      <button class="chip" data-q="Spicy" onclick="setQFilter('Spicy',this)">Spicy</button>
+    </div>
+    <div class="qcard" onclick="nextQuestion()">
+      <div class="qtag" id="q-tag">Tap for a question</div>
+      <div class="qtext" id="q-text">Ready when you are.</div>
+    </div>
+    <button class="btn btn-gold" onclick="nextQuestion()">Next Question</button>
+    <button class="btn btn-soft" onclick="shuffleQuestions()">&#128256; Shuffle the Deck</button>
+    <p class="small" style="text-align:center" id="q-count"></p>
+  </section>
+
+  <!-- FAVOURITES -->
+  <section id="view-favs" class="hidden">
+    <h2>&#10084; Favourites</h2>
+    <p class="sub">The ones you want to come back to.</p>
+    <div id="fav-list"></div>
+  </section>
+
+  <!-- DONE -->
+  <section id="view-done" class="hidden">
+    <h2>&#10003; Done Together</h2>
+    <p class="sub">Your little history of evenings together.</p>
+    <div id="done-list"></div>
+    <button class="btn btn-soft" onclick="clearDone()">Clear History</button>
+  </section>
+
+  <!-- AFTER DARK GATE -->
+  <section id="view-gate" class="hidden">
+    <div class="gate">
+      <div class="lock">&#128274;</div>
+      <h2>Private &mdash; just for the two of you</h2>
+      <p class="sub">This section is for grown-up, romantic time together. Everything stays on this phone. Nothing is shared, uploaded or tracked.</p>
+      <button class="btn btn-gold" onclick="enterDark()">Enter &mdash; It&rsquo;s Just Us</button>
+      <button class="btn btn-ghost" onclick="goHome()">Not Tonight</button>
+    </div>
+  </section>
+
+  <!-- AFTER DARK -->
+  <section id="view-dark" class="hidden">
+    <button class="back" onclick="goHome()">&larr; Home</button>
+    <h2>&#127769; After Dark</h2>
+    <div class="note"><b>First, together:</b> agree a safe word, check in with each other, and stop anytime &mdash; no questions, no pressure. What feels good is whatever you both enjoy. Slow is good.</div>
+    <div id="dark-list"></div>
+  </section>
+</main>
+<nav>
+  <button id="nav-home" class="on" onclick="goHome()"><span class="ic">&#127968;</span>Home</button>
+  <button id="nav-browse" onclick="showBrowse('All')"><span class="ic">&#128161;</span>Ideas</button>
+  <button id="nav-questions" onclick="showQuestions()"><span class="ic">&#128172;</span>Questions</button>
+  <button id="nav-favs" onclick="showFavs()"><span class="ic">&#10084;</span>Saved</button>
+  <button id="nav-done" onclick="showDone()"><span class="ic">&#10003;</span>Done</button>
+</nav>
+<script>
+var CATS=[
+ {id:'home',name:'At Home',em:'\u{1F3E0}',blurb:'Cozy nights in'},
+ {id:'out',name:'Go Out',em:'\u{1F307}',blurb:'Out in Fremont'},
+ {id:'u50',name:'Under $50',em:'\u{1F4B5}',blurb:'Sweet & cheap'},
+ {id:'u100',name:'Under $100',em:'\u{1F942}',blurb:'A proper treat'},
+ {id:'group',name:'Bigger Group',em:'\u{1F46F}',blurb:'With friends'},
+ {id:'dark',name:'After Dark',em:'\u{1F319}',blurb:'Just the two of you'}
+];
+var ACTS=[
+ // AT HOME (12)
+ {id:'h1',cat:'home',t:'Story Night — Read Aloud',d:'Pick a story from your library and read it aloud to each other, taking turns with the voices. End with what you each felt about it.',time:'45 min',cost:'Free',vibe:'Cozy',need:'One of your storybooks, two cups of chai.',tip:'Try a Ramayana tale or a Temple Story you have not read yet. Dim the lights, it is bedtime-story time.'},
+ {id:'h2',cat:'home',t:'Cook a New Dish Together',d:'Pick a recipe neither of you has tried. One chops, one stirs, and you taste as you go. No rushing, music on.',time:'1 hr',cost:'$',vibe:'Playful',need:'A recipe, ingredients, your favourite playlist.',tip:'Give each other jobs — head chef and sous chef — and swap halfway.'},
+ {id:'h3',cat:'home',t:'90s Bollywood Movie + Blanket Fort',d:'A comfort classic, a blanket fort on the sofa, and snacks. Phones away, subtitles on if you like singing along.',time:'Evening',cost:'Free',vibe:'Cozy',need:'A 90s favourite, blankets, popcorn or pakoras.',tip:'Let Ekashmi pick the film this time — or draw one from a hat.'},
+ {id:'h4',cat:'home',t:'Draw Each Other in 10 Minutes',d:'Sit opposite each other, ten minutes, one sketch each. Silly is fine — the worse the likeness, the more you will laugh.',time:'30 min',cost:'Free',vibe:'Playful',need:'Paper and pencils or pens.',tip:'Ekashmi gets to judge, but Mahesh gets a rematch. Frame the winner.'},
+ {id:'h5',cat:'home',t:'Photo Night — Scotland, London & Diwali',d:'Go through old photos together — Scotland, London, Diwali — and tell the story behind each favourite. Pick a few to print.',time:'1 hr',cost:'Free',vibe:'Romantic',need:'Your phone or laptop, a comfy spot.',tip:'Each pick your top three photos of the two of you and say why.'},
+ {id:'h6',cat:'home',t:'Puzzle or Card Game Night',d:'A jigsaw, a card game, or a two-player board game. Low stakes, high teasing. Loser makes the chai.',time:'1 hr',cost:'Free',vibe:'Playful',need:'A puzzle or a deck of cards.',tip:'Keep score across the week — winner picks the next movie.'},
+ {id:'h7',cat:'home',t:'Bhajan Evening — 60 Minutes Together',d:'Put on one of your 60-minute bhajan loops, lie down together, and just listen. No talking needed for the first loop.',time:'1 hr',cost:'Free',vibe:'Cozy',need:'Your Sita Ram or Hey Ram 60-minute loop.',tip:'Light a diya, close your eyes, and let the repetition settle the day.'},
+ {id:'h8',cat:'home',t:'Living-Room Picnic',d:'Blanket on the floor, food on plates in the middle, candles if you like. Dinner, but make it a little occasion.',time:'1 hr',cost:'$',vibe:'Romantic',need:'A blanket, finger food or takeout, candles.',tip:'Eat with your hands for the fun dishes — it always tastes better.'},
+ {id:'h9',cat:'home',t:'DIY Spa Night',d:'Face masks, warm towels, foot rubs, hair oiling. Take turns being the spa therapist — slow and unhurried.',time:'1 hr',cost:'$',vibe:'Romantic',need:'Face masks, oil, towels, soft music.',tip:'Start with a foot soak in warm water — it resets the whole evening.'},
+ {id:'h10',cat:'home',t:'Dance in the Kitchen',d:'Put on a song you both love and dance while dinner cooks. No audience, no skill needed — just the two of you.',time:'30 min',cost:'Free',vibe:'Playful',need:'A speaker and one good song.',tip:'Slow song first, then something you can be silly to.'},
+ {id:'h11',cat:'home',t:'Build a Playlist for Each Other',d:'Each make a 5-song playlist for the other — songs that remind you of them. Play them and explain every pick.',time:'45 min',cost:'Free',vibe:'Romantic',need:'Your music app, two lists of five.',tip:'One rule: at least one song has to make the other person laugh.'},
+ {id:'h12',cat:'home',t:'Stargaze from the Balcony',d:'Step outside with a blanket and look up. Find the brightest star, make a wish, and just sit quietly together.',time:'30 min',cost:'Free',vibe:'Romantic',need:'A blanket, warm drinks, clear sky.',tip:'Tonight is clear in Fremont — a good night for it.'},
+ // GO OUT (10)
+ {id:'o1',cat:'out',t:'Sunset Walk at Lake Elizabeth',d:'An easy loop around the lake at Central Park as the sun goes down. Hold hands, talk about the day, watch the ducks.',time:'1 hr',cost:'Free',vibe:'Cozy',need:'Comfy shoes, a light jacket.',tip:'Go just before sunset — the light on the water is the best part.'},
+ {id:'o2',cat:'out',t:'Niles Downtown Walk + Dessert',d:'A slow wander through old Niles, window-shopping, then dessert at a cafe. No agenda, just strolling.',time:'Evening',cost:'$',vibe:'Romantic',need:'Nothing but time.',tip:'Share one dessert — ordering two is for amateurs.'},
+ {id:'o3',cat:'out',t:'Gym Together',d:'Your twice-a-week full-body routine, side by side. Spot each other, stretch together after, and feel good about it.',time:'1 hr',cost:'Free',vibe:'Active',need:'Gym kit, water bottles.',tip:'Finish with ten minutes of stretching together — it counts as the cuddle.'},
+ {id:'o4',cat:'out',t:'Late Chai / Coffee Date',d:'Find a quiet cafe, order something warm, and talk properly — no errands, no to-do list, just the two of you.',time:'45 min',cost:'$',vibe:'Cozy',need:'A cafe you like.',tip:'Ask one question from the Questions deck while you wait for your drinks.'},
+ {id:'o5',cat:'out',t:'Movie at the Theatre',d:'The big screen, the popcorn, the dark — pick something fun and go just for the two of you.',time:'Evening',cost:'$$',vibe:'Playful',need:'Tickets, popcorn money.',tip:'Pick the film together in the car — no scrolling for an hour.'},
+ {id:'o6',cat:'out',t:'Drive + Stargazing',d:'Drive somewhere a little darker, park safely, and look up. Bring blankets and something warm to drink.',time:'Evening',cost:'$',vibe:'Romantic',need:'Car, blankets, a flask.',tip:'Turn the car lights off, wait five minutes — your eyes adjust and the sky opens up.'},
+ {id:'o7',cat:'out',t:'Farmers Market Browse',d:'Wander the stalls, taste things, buy one strange fruit or snack to try together at home.',time:'1 hr',cost:'$',vibe:'Playful',need:'A market morning or evening, a tote bag.',tip:'Each pick one ingredient and cook with both tonight.'},
+ {id:'o8',cat:'out',t:'Bookstore Browse',d:'Wander the shelves and each pick a book for the other. Read the first page aloud in the shop.',time:'1 hr',cost:'$',vibe:'Cozy',need:'A bookshop, curiosity.',tip:'Rule: you cannot pick a book you would pick for yourself.'},
+ {id:'o9',cat:'out',t:'Dessert Crawl — Two Places',d:'One dessert at one place, a second dessert somewhere else. Walk between them and rate each one out of ten.',time:'Evening',cost:'$',vibe:'Playful',need:'Two dessert spots in mind.',tip:'Keep score — the winner gets picked again next time.'},
+ {id:'o10',cat:'out',t:'Walk + Ice Cream',d:'A simple classic: an evening walk, then ice cream. Small, sweet, and always good.',time:'45 min',cost:'$',vibe:'Cozy',need:'A walk route and an ice cream shop.',tip:'Try a flavour you have never had before — each of you.'},
+ // UNDER $50 (10)
+ {id:'f1',cat:'u50',t:'Takeout Picnic — $30–40',d:'Order your favourites, pack them up, and eat them at the park on a blanket as the evening cools down.',time:'1 hr',cost:'$30–40',vibe:'Cozy',need:'Takeout, a blanket, the park.',tip:'Bring a speaker for one quiet song while you eat.'},
+ {id:'f2',cat:'u50',t:'Cook-at-Home Date — $25–35',d:'Nice ingredients from the store, candles on the table, and a meal you cook side by side.',time:'1 hr',cost:'$25–35',vibe:'Romantic',need:'Ingredients, candles, music.',tip:'Dress up a little — it makes the kitchen feel like a restaurant.'},
+ {id:'f3',cat:'u50',t:'Ice Cream + Walk — $15–20',d:'The cheapest good date there is: a walk, then ice cream, then a longer walk home.',time:'45 min',cost:'$15–20',vibe:'Cozy',need:'Walking shoes, an ice cream shop.',tip:'Sit on a bench and people-watch for ten minutes.'},
+ {id:'f4',cat:'u50',t:'DIY Spa Night — $20',d:'Face masks and oil from the store, warm towels, and an hour of taking care of each other.',time:'1 hr',cost:'$20',vibe:'Romantic',need:'Masks, oil, towels.',tip:'Trade massages — ten minutes each, no skipping.'},
+ {id:'f5',cat:'u50',t:'Movie at Home — $10–15',d:'Fancy popcorn, drinks, lights off, phones in another room. A theatre, but on your sofa.',time:'Evening',cost:'$10–15',vibe:'Cozy',need:'Popcorn, drinks, a good film.',tip:'Make tickets — silly paper ones — and hand them over at the door.'},
+ {id:'f6',cat:'u50',t:'$10 Surprise Each',d:'Go to a thrift or book store with $10 each and buy a surprise for the other. Reveal them over chai.',time:'1 hr',cost:'$20 total',vibe:'Playful',need:'$10 each, a shop to browse.',tip:'The worse the gift, the better the story — go weird.'},
+ {id:'f7',cat:'u50',t:'Home Mocktail / Cocktail Night',d:'Invent two drinks each — one named after the other person — and judge them properly with garnishes.',time:'45 min',cost:'$15–25',vibe:'Playful',need:'Juice or mixers, fruit, glasses.',tip:'Write the recipes down — the winner becomes your house drink.'},
+ {id:'f8',cat:'u50',t:'Bake Together',d:'Pick something simple — cookies, a cake, banana bread — and bake it together. Lick the spoon, obviously.',time:'1 hr',cost:'$10–15',vibe:'Playful',need:'A recipe, ingredients, an oven.',tip:'Decorate it together, however badly. Then eat it warm.'},
+ {id:'f9',cat:'u50',t:'Board Game + Snacks',d:'A board or card game, a pile of snacks, and a rule: the loser does the dishes.',time:'Evening',cost:'$10',vibe:'Playful',need:'A game, snacks.',tip:'Best of three — and no sulking allowed.'},
+ {id:'f10',cat:'u50',t:'Photo Walk',d:'Walk your neighbourhood with your phones and photograph five things that are beautiful, funny, or just yours. Compare at the end.',time:'45 min',cost:'Free',vibe:'Playful',need:'Phones, a route.',tip:'Theme it: five photos, each one has to include the other person.'},
+ // UNDER $100 (8)
+ {id:'g1',cat:'u100',t:'Nice Dinner Out — $70–90',d:'A proper dinner for two in Fremont or Milpitas. Dress up a little, order what you actually want, linger over dessert.',time:'Evening',cost:'$70–90',vibe:'Romantic',need:'A restaurant you both like, a booking if needed.',tip:'Skip the phones for the first course — just talk.'},
+ {id:'g2',cat:'u100',t:'Dinner + Movie Out — $85–95',d:'Dinner first, film after — the classic full evening out, done properly.',time:'Evening',cost:'$85–95',vibe:'Playful',need:'A restaurant and a cinema, tickets booked.',tip:'Pick the film before dinner so you can talk about it over food.'},
+ {id:'g3',cat:'u100',t:'Cook-at-Home Kit — $60–80',d:'Order a meal kit, cook it together like a little cooking show, plate it up nicely, and eat by candlelight.',time:'Evening',cost:'$60–80',vibe:'Romantic',need:'A meal kit, candles, music.',tip:'Plate it like a restaurant — it tastes better when it looks fancy.'},
+ {id:'g4',cat:'u100',t:'Dinner + Dessert at Two Places — $80–95',d:'Mains at one place, dessert at another. Two atmospheres, one long evening.',time:'Evening',cost:'$80–95',vibe:'Romantic',need:'Two places in mind, a walk between them.',tip:'Walk, do not drive, between the two — the evening stretches out nicely.'},
+ {id:'g5',cat:'u100',t:'Order In + Wine / Mocktails + Flowers — $60–75',d:'Your favourite order-in, nice drinks, and a small bunch of flowers on the table. A restaurant, but at home in your pyjamas.',time:'Evening',cost:'$60–75',vibe:'Romantic',need:'Takeout, drinks, flowers.',tip:'Flowers from the grocery store count — it is the gesture.'},
+ {id:'g6',cat:'u100',t:'Couples Picnic Kit + Park',d:'Pack a proper picnic — good cheese, bread, fruit, something sweet — and take it to Central Park for a long, slow evening.',time:'Evening',cost:'$40–60',vibe:'Romantic',need:'A picnic basket, a blanket, good food.',tip:'Bring a card game for after you eat.'},
+ {id:'g7',cat:'u100',t:'A Little Shopping Date',d:'Browse together for something for the home — a lamp, a plant, a frame — then celebrate with chai after.',time:'Evening',cost:'Up to $100',vibe:'Playful',need:'A shop or two, a budget agreed first.',tip:'Agree the budget before you go in — then enjoy spending it.'},
+ {id:'g8',cat:'u100',t:'Treat Night — Massage + Takeout',d:'Book a short couples massage or buy good massage oil, then order in your favourite food. Body first, belly second.',time:'Evening',cost:'$70–95',vibe:'Romantic',need:'Massage booking or oil, takeout.',tip:'No chores after — this night is only for resting.'},
+ // BIGGER GROUP (10)
+ {id:'b1',cat:'group',t:'Double-Date Dinner',d:'Dinner with another couple. Each couple brings a dish, or you pick a place together — four people, twice the stories.',time:'Evening',cost:'$$',vibe:'Playful',need:'Another couple, a place or a dish each.',tip:'Ask the other couple one question from the Questions deck.'},
+ {id:'b2',cat:'group',t:'Game Night — 6 to 10 People',d:'Bollywood quiz, dumb charades, Antakshari. Teams, shouting, and someone always cheating at charades.',time:'Evening',cost:'$',vibe:'Playful',need:'Friends, snacks, a quiz list.',tip:'Mahesh hosts the quiz, Ekashmi keeps score — no arguing with the scorekeeper.'},
+ {id:'b3',cat:'group',t:'Potluck + Karaoke',d:'Everyone brings a dish, then everyone sings one Hindi song. Bad singing is not just allowed, it is required.',time:'Evening',cost:'$',vibe:'Playful',need:'Friends, food, a karaoke setup or speaker.',tip:'Duet first — you two open the night together.'},
+ {id:'b4',cat:'group',t:'Group Cooking — Momos / Chaat',d:'Everyone has a station: folding momos, assembling chaat. Messy hands, full stomachs, lots of tasting.',time:'Evening',cost:'$',vibe:'Playful',need:'Ingredients, friends, an assembly line.',tip:'Vote on the best momo — the winner gets the last one.'},
+ {id:'b5',cat:'group',t:'Outdoor Picnic + Badminton / Cricket',d:'A park picnic with friends, then a casual game. No one is keeping proper score — probably.',time:'Afternoon',cost:'$',vibe:'Active',need:'A park, a racket or a bat, food.',tip:'Central Park has the space — bring a blanket and a ball.'},
+ {id:'b6',cat:'group',t:'Movie Night with Friends — 90s Classic',d:'A 90s favourite on the big screen at home, snacks potluck-style, everyone in their comfiest clothes.',time:'Evening',cost:'$',vibe:'Cozy',need:'Friends, a film, snacks.',tip:'Vote on the film in the group chat the day before.'},
+ {id:'b7',cat:'group',t:'Group Walk + Chai',d:'A walk around the lake with friends, ending at a chai spot. Easy, chatty, and good for everyone.',time:'1 hr',cost:'$',vibe:'Cozy',need:'Friends, a route, a chai place.',tip:'Walk in pairs and swap partners halfway — new conversations.'},
+ {id:'b8',cat:'group',t:'Board-Game Night',d:'A table full of board games, snacks, and friendly rivalry. Keep it to games everyone can learn in five minutes.',time:'Evening',cost:'$',vibe:'Playful',need:'Games, snacks, friends.',tip:'One new game per night — the group votes on the next one.'},
+ {id:'b9',cat:'group',t:'Diwali-Style Potluck',d:'Everyone brings a festive dish, the lights go on, and the evening turns into a little celebration — any time of year.',time:'Evening',cost:'$',vibe:'Romantic',need:'Friends, dishes, lights or diyas.',tip:'Ask everyone to bring a dish from their childhood.'},
+ {id:'b10',cat:'group',t:'Couples Trivia Night',d:'Teams of couples, trivia about films, food, music and each other. The winning couple picks the next venue.',time:'Evening',cost:'$',vibe:'Playful',need:'Trivia questions, teams, snacks.',tip:'Include a round of “how well do you know your partner?” — it gets loud.'},
+ // AFTER DARK (14)
+ {id:'d1',cat:'dark',t:'Slow Massage with Oil',d:'Warm oil, low light, and an unhurried massage — back, shoulders, feet. Take turns, no rush, no goal but feeling good.',time:'45 min',cost:'$',vibe:'Romantic',need:'Massage oil, a towel, soft light.',tip:'Start with the feet — it relaxes everything else.'},
+ {id:'d2',cat:'dark',t:'Blindfold + Touch',d:'One of you wears a blindfold while the other explores with fingertips, a feather, or warm hands. The one blindfolded just feels.',time:'30 min',cost:'Free',vibe:'Romantic',need:'A soft scarf or sleep mask.',tip:'Swap roles — the second turn is always better.'},
+ {id:'d3',cat:'dark',t:'Shower Together',d:'Warm water, slow and close. Wash each other’s hair, take your time, and let the day wash off together.',time:'30 min',cost:'Free',vibe:'Romantic',need:'Warm water, your favourite soap.',tip:'Keep the lights low and the water warm — no hurry.'},
+ {id:'d4',cat:'dark',t:'Playful Roleplay',d:'Try a simple scenario together — strangers meeting, a boss and an employee, a favourite film scene. Keep it light and laugh if it gets silly.',time:'Evening',cost:'Free',vibe:'Playful',need:'A scenario you both agree on, a safe word.',tip:'Talk about the scene first — what is fun, what is off-limits.'},
+ {id:'d5',cat:'dark',t:'Dress Up for Each Other',d:'Something new, something lacy, or just his shirt on her — dress up, walk in slowly, and enjoy being looked at.',time:'30 min',cost:'$',vibe:'Romantic',need:'Something that makes you feel good.',tip:'Compliment first, touch second — being seen is half of it.'},
+ {id:'d6',cat:'dark',t:'Light Bondage with a Soft Scarf',d:'Softly tie wrists with a silk scarf — loose, comfortable, easy to slip out of. The tied one gives up control for a little while.',time:'30 min',cost:'Free',vibe:'Spicy',need:'A soft scarf, a safe word, trust.',tip:'Check in often. If anything pinches or feels wrong, stop and untie.'},
+ {id:'d7',cat:'dark',t:'Temperature Play — Ice & Warm Oil',d:'Alternate an ice cube and warm oiled hands across skin — neck, stomach, inner arms. The contrast wakes everything up.',time:'30 min',cost:'Free',vibe:'Spicy',need:'Ice cubes, warm oil, a towel.',tip:'Ask “more cold or more warm?” — let them choose.'},
+ {id:'d8',cat:'dark',t:'Teasing and Edging',d:'Build slowly, pause just before the peak, then build again. A few rounds of this makes the finish far stronger.',time:'45 min',cost:'Free',vibe:'Spicy',need:'Time, patience, no rush.',tip:'The one being teased sets the pace with a word or a squeeze.'},
+ {id:'d9',cat:'dark',t:'Mirror Play',d:'Do it where you can see each other — a mirror nearby changes everything. Watch each other’s faces as much as your own.',time:'30 min',cost:'Free',vibe:'Spicy',need:'A mirror, low light.',tip:'Keep eye contact in the mirror — it is surprisingly intense.'},
+ {id:'d10',cat:'dark',t:'Whisper What You Want',d:'Take turns whispering exactly what you want, in detail, close to the ear. Saying it out loud is half the thrill.',time:'30 min',cost:'Free',vibe:'Spicy',need:'Just the two of you, honesty.',tip:'Start soft if it is new — one sentence each, then more.'},
+ {id:'d11',cat:'dark',t:'A New Position or a New Spot',d:'Try a position you have not tried, or a spot that is not the bed — the couch, the floor with blankets. New place, new feeling.',time:'30 min',cost:'Free',vibe:'Playful',need:'Blankets, a little courage.',tip:'Comfort first — if it hurts, it is not sexy. Adjust together.'},
+ {id:'d12',cat:'dark',t:'Slow Dance, Then Bed',d:'One slow song, dancing close in the dark, then carry that closeness straight to bed without breaking it.',time:'30 min',cost:'Free',vibe:'Romantic',need:'One slow song, low light.',tip:'Dance cheek to cheek for the whole song — no talking.'},
+ {id:'d13',cat:'dark',t:'Candlelit Bath Together',d:'A warm bath, candles around the edge, and nowhere to be. Soak, talk quietly, wash each other slowly.',time:'45 min',cost:'$',vibe:'Romantic',need:'Candles, bath oil, towels.',tip:'Keep candles away from towels and hair — safety first, romance second.'},
+ {id:'d14',cat:'dark',t:'Aftercare — Cuddle, Talk, Water',d:'Afterwards, stay close. Water, a blanket, slow talking about what you loved. This part matters as much as the rest.',time:'30 min',cost:'Free',vibe:'Cozy',need:'Water, a blanket, each other.',tip:'Ask “what was your favourite part?” — then remember it for next time.'}
+];
+var QS=[
+ {t:'Fun',q:'What was your favourite moment with me this month?'},
+ {t:'Fun',q:'What would your perfect slow Sunday look like?'},
+ {t:'Fun',q:'What food reminds you most of home?'},
+ {t:'Fun',q:'If we could live anywhere for a year, where would you pick?'},
+ {t:'Fun',q:'What is the funniest memory we have together?'},
+ {t:'Fun',q:'What is your dream trip — and what would we do on day one?'},
+ {t:'Fun',q:'What song always makes you think of me?'},
+ {t:'Fun',q:'If we swapped lives for a day, what would you do first?'},
+ {t:'Fun',q:'What is the best meal you have ever eaten with me?'},
+ {t:'Fun',q:'What is one thing you want us to try together this year?'},
+ {t:'Fun',q:'What was your favourite moment from our early days?'},
+ {t:'Fun',q:'If you could relive one evening we have had, which one?'},
+ {t:'Deep',q:'What is a dream you have not told me yet?'},
+ {t:'Deep',q:'When do you feel most like yourself with me?'},
+ {t:'Deep',q:'What are you proud of me for lately?'},
+ {t:'Deep',q:'What is something you want us to be better at together?'},
+ {t:'Deep',q:'What do you need more of from me right now?'},
+ {t:'Deep',q:'What is a fear you have about the future — and how can I help?'},
+ {t:'Deep',q:'When did you feel most loved by me?'},
+ {t:'Deep',q:'What is something you have forgiven me for that I never knew?'},
+ {t:'Deep',q:'What does a good life look like to you in ten years?'},
+ {t:'Deep',q:'What is one thing from your childhood you want to keep alive between us?'},
+ {t:'Deep',q:'What would you want me to know if you could not say it out loud?'},
+ {t:'Deep',q:'What is the kindest thing anyone has ever done for you?'},
+ {t:'Spicy',q:'What is the most attractive thing I have done recently?'},
+ {t:'Spicy',q:'What is a fantasy you have been curious about but have not said out loud?'},
+ {t:'Spicy',q:'What is your favourite place to be kissed?'},
+ {t:'Spicy',q:'What makes you feel desired?'},
+ {t:'Spicy',q:'What is a scenario you would like to try together one day?'},
+ {t:'Spicy',q:'What is the sexiest thing I have ever worn?'},
+ {t:'Spicy',q:'Where is your favourite place for us to be close — and why?'},
+ {t:'Spicy',q:'What is one thing I do that always turns you on?'},
+ {t:'Spicy',q:'If tonight were only about you, what would happen?'},
+ {t:'Spicy',q:'What is something naughty you have thought about doing with me?'},
+ {t:'Spicy',q:'What do you want me to whisper to you tonight?'},
+ {t:'Spicy',q:'What is your favourite memory of us in bed?'}
+];
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function read(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function getFavs(){return read('tt_favs',[])}
+function getDone(){return read('tt_done',{})}
+function isFav(id){return getFavs().indexOf(id)>=0}
+function toggleFav(id){var f=getFavs();var i=f.indexOf(id);if(i>=0){f.splice(i,1)}else{f.push(id)}store('tt_favs',f);renderDetail(id)}
+function markDone(id){var d=getDone();d[id]=new Date().toISOString().slice(0,10);store('tt_done',d);renderDetail(id)}
+function actById(id){for(var i=0;i<ACTS.length;i++)if(ACTS[i].id===id)return ACTS[i];return null}
+function catById(id){for(var i=0;i<CATS.length;i++)if(CATS[i].id===id)return CATS[i];return null}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+var views=['home','browse','detail','questions','favs','done','gate','dark'];
+function showView(v){
+  views.forEach(function(x){var el=document.getElementById('view-'+x);if(el)el.classList.toggle('hidden',x!==v)});
+  var nav={home:'nav-home',browse:'nav-browse',questions:'nav-questions',favs:'nav-favs',done:'nav-done'};
+  Object.keys(nav).forEach(function(k){var b=document.getElementById(nav[k]);if(b)b.classList.toggle('on',k===v)});
+  window.scrollTo(0,0);
+}
+function goHome(){renderHome();showView('home')}
+var currentCat='All', currentQuery='', detailReturn='home', detailId=null;
+function renderHome(){
+  var g=document.getElementById('catgrid');g.innerHTML='';
+  CATS.forEach(function(c){
+    var n=ACTS.filter(function(a){return a.cat===c.id}).length;
+    var d=document.createElement('div');d.className='catcard';
+    d.innerHTML='<div class="em">'+c.em+'</div><b>'+esc(c.name)+'</b><span>'+esc(c.blurb)+' &middot; '+n+' ideas</span>';
+    d.onclick=function(){openCat(c.id)};g.appendChild(d);
+  });
+  var picks=ACTS.filter(function(a){return a.cat!=='dark'}).slice().sort(function(){return Math.random()-0.5}).slice(0,3);
+  document.getElementById('home-picks').innerHTML=picks.map(cardHTML).join('');
+}
+function cardHTML(a){
+  var fav=isFav(a.id)?' &#10084;':'';
+  return '<div class="card" onclick="openDetail(\''+a.id+'\')"><h3>'+esc(a.t)+fav+'</h3><p>'+esc(a.d)+'</p><div class="tags"><span class="tag gold">'+esc(a.time)+'</span><span class="tag">'+esc(a.cost)+'</span><span class="tag">'+esc(a.vibe)+'</span></div></div>';
+}
+function openCat(cat){
+  currentCat=cat;currentQuery='';
+  var s=document.getElementById('search');if(s)s.value='';
+  renderChips();renderBrowse();showView('browse');
+}
+function renderChips(){
+  var box=document.getElementById('cat-chips');box.innerHTML='';
+  var all=[{id:'All',name:'All'}].concat(CATS.filter(function(c){return c.id!=='dark'}));
+  all.forEach(function(c){
+    var b=document.createElement('button');b.className='chip'+(currentCat===c.id?' on':'');b.textContent=c.name;
+    b.onclick=function(){currentCat=c.id;renderChips();renderBrowse()};box.appendChild(b);
+  });
+}
+function renderBrowse(){
+  var title=document.getElementById('browse-title');
+  title.textContent=currentCat==='All'?'All ideas':(catById(currentCat)?catById(currentCat).name:'All ideas');
+  var q=currentQuery.toLowerCase();
+  var list=ACTS.filter(function(a){
+    if(a.cat==='dark')return false;
+    if(currentCat!=='All'&&a.cat!==currentCat)return false;
+    if(q&&(a.t+' '+a.d+' '+a.vibe).toLowerCase().indexOf(q)<0)return false;
+    return true;
+  });
+  document.getElementById('browse-list').innerHTML=list.length?list.map(cardHTML).join(''):'<div class="empty">Nothing matches that search.<br>Try &lsquo;movie&rsquo;, &lsquo;walk&rsquo; or &lsquo;cook&rsquo;.</div>';
+}
+function onSearch(v){currentQuery=v;currentCat='All';renderChips();renderBrowse();showView('browse')}
+function showBrowse(cat){openCat(cat||'All')}
+function openDetail(id){
+  detailId=id;detailReturn=document.getElementById('view-browse').classList.contains('hidden')?'home':'browse';
+  renderDetail(id);showView('detail');
+}
+function renderDetail(id){
+  var a=actById(id);if(!a)return;
+  var done=getDone()[id];
+  var fav=isFav(id);
+  document.getElementById('detail').innerHTML=
+   '<h2>'+esc(a.t)+'</h2>'+
+   '<div class="tags"><span class="tag gold">'+esc(a.time)+'</span><span class="tag">'+esc(a.cost)+'</span><span class="tag">'+esc(a.vibe)+'</span><span class="tag">'+esc(catById(a.cat).name)+'</span></div>'+
+   '<p class="detail-meta" style="margin-top:14px">'+esc(a.d)+'</p>'+
+   '<div class="note"><b>What you need:</b> '+esc(a.need)+'</div>'+
+   '<div class="note"><b>Make it yours:</b> '+esc(a.tip)+'</div>'+
+   (done?'<p class="small">&#10003; Done together on '+esc(done)+'</p>':'')+
+   '<button class="btn '+(fav?'btn-soft':'btn-gold')+'" onclick="toggleFav(\''+a.id+'\')">'+(fav?'&#10084; Saved — tap to remove':'&#9825; Save to Favourites')+'</button>'+
+   '<button class="btn btn-ghost" onclick="markDone(\''+a.id+'\')">&#10003; Mark as Done</button>'+
+   '<button class="btn btn-soft" onclick="nextInCat(\''+a.cat+'\',\''+a.id+'\')">Next in this category &rarr;</button>';
+}
+function backFromDetail(){if(detailReturn==='browse'){renderBrowse();showView('browse')}else{goHome()}}
+function nextInCat(cat,cur){
+  var list=ACTS.filter(function(a){return a.cat===cat&&a.id!==cur});
+  if(!list.length)return;
+  openDetail(list[Math.floor(Math.random()*list.length)].id);
+}
+function surpriseMe(){
+  var pool=ACTS.filter(function(a){return a.cat!=='dark'});
+  openDetail(pool[Math.floor(Math.random()*pool.length)].id);
+}
+function showFavs(){
+  var f=getFavs().map(actById).filter(Boolean);
+  document.getElementById('fav-list').innerHTML=f.length?f.map(cardHTML).join(''):'<div class="empty">Nothing saved yet.<br>Tap the heart on any idea to keep it here.</div>';
+  showView('favs');
+}
+function showDone(){
+  var d=getDone();var ids=Object.keys(d).sort(function(x,y){return d[y]<d[x]?-1:1});
+  document.getElementById('done-list').innerHTML=ids.length?ids.map(function(id){var a=actById(id);return a?'<div class="card" onclick="openDetail(\''+a.id+'\')"><h3>'+esc(a.t)+'</h3><p>Done on '+esc(d[id])+'</p></div>':''}).join(''):'<div class="empty">No evenings logged yet.<br>Mark an idea as Done after you try it.</div>';
+  showView('done');
+}
+function clearDone(){if(confirm('Clear your Done history?')){store('tt_done',{});showDone()}}
+// Questions
+var qFilter='All', qDeck=[], qIdx=0;
+function shuffleQuestions(){
+  var pool=QS.filter(function(x){return qFilter==='All'||x.t===qFilter});
+  qDeck=pool.slice().sort(function(){return Math.random()-0.5});qIdx=0;
+  document.getElementById('q-count').textContent=qDeck.length+' questions in this deck';
+  nextQuestion();
+}
+function setQFilter(f,btn){
+  qFilter=f;
+  document.querySelectorAll('#view-questions .chip').forEach(function(c){c.classList.remove('on')});
+  btn.classList.add('on');shuffleQuestions();
+}
+function nextQuestion(){
+  if(!qDeck.length||qIdx>=qDeck.length)shuffleQuestions();
+  var q=qDeck[qIdx++];
+  document.getElementById('q-tag').textContent=q.t+' question';
+  document.getElementById('q-text').textContent=q.q;
+}
+function showQuestions(){if(!qDeck.length)shuffleQuestions();showView('questions')}
+// After Dark
+function openDark(){
+  if(read('tt_dark_ok',false)){renderDark();showView('dark')}
+  else showView('gate');
+}
+function enterDark(){store('tt_dark_ok',true);renderDark();showView('dark')}
+function renderDark(){
+  var list=ACTS.filter(function(a){return a.cat==='dark'});
+  document.getElementById('dark-list').innerHTML=list.map(cardHTML).join('');
+}
+// Wire the After Dark card: intercept clicks on dark category
+var _openCat=openCat;
+openCat=function(cat){if(cat==='dark'){openDark()}else{_openCat(cat)}};
+renderHome();shuffleQuestions();
+</script>
+</body>
+</html>

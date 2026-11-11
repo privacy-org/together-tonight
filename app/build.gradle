@@ -1,0 +1,51 @@
+plugins {
+    id("com.android.application")
+}
+
+android {
+    namespace = "com.mahesh.togethertonight"
+    compileSdk = 34
+
+    // Pin the debug signing key to the keystore copied under the persisted
+    // workspace (~/workspace/.tooling/signing/, NOT in this repo — it is a
+    // private key). The default debug keystore lives in /root/.android on
+    // ephemeral VM storage, so without this the signing SHA-1 silently
+    // rotates on every VM replacement. Expected SHA-1:
+    // 0A:1A:71:63:12:09:A8:1A:7B:69:F7:F0:C2:B6:2A:53:4A:A8:46:CE
+    // (the same key as the Workout Tracker / Gym Saathi builds).
+    signingConfigs {
+        debug {
+            storeFile = rootProject.file("../.tooling/signing/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
+    defaultConfig {
+        applicationId = "com.mahesh.togethertonight"
+        minSdk = 24
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildTypes {
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        getByName("release") {
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+// No external dependencies on purpose: the app is a single native Activity
+// hosting a WebView, using only the Android framework. The Together Tonight web app
+// itself is bundled as an asset (src/main/assets/index.html).
+dependencies {
+}
